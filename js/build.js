@@ -1,7 +1,7 @@
 Fliplet().then(function() {
-  $('.fl-data-source-validation').each(function() {
+  $('.fl-sms-verification').each(function() {
     var $el = $(this);
-    var widgetId = $el.data('data-source-validation-id');
+    var widgetId = $el.data('sms-verification-id');
     var data = Fliplet.Widget.getData(widgetId) || {};
 
     var dataSourceId = data.validation.dataSourceQuery.dataSourceId;
@@ -14,16 +14,16 @@ Fliplet().then(function() {
     }
 
     function calculateElHeight(el) {
-      var parentUUID = el.parent().attr('data-data-source-validation-uuid');
+      var parentUUID = el.parent().attr('data-sms-verification-uuid');
       var elementHeight = el.outerHeight(true);
 
       if (el.hasClass('start')) {
-        $('[data-data-source-validation-uuid="' + parentUUID + '"]').children('.state.start')
+        $('[data-sms-verification-uuid="' + parentUUID + '"]').children('.state.start')
         if (vmData.storedEmail) {
-          $('[data-data-source-validation-uuid="' + parentUUID + '"]').children('.state.start').addClass('has-code');
+          $('[data-sms-verification-uuid="' + parentUUID + '"]').children('.state.start').addClass('has-code');
         }
         setTimeout(function() {
-          $('[data-data-source-validation-uuid="' + parentUUID + '"]').children('.state.start').removeClass('start').addClass('present');
+          $('[data-sms-verification-uuid="' + parentUUID + '"]').children('.state.start').removeClass('start').addClass('present');
         }, 1000);
       }
 
@@ -119,7 +119,7 @@ Fliplet().then(function() {
                   // Save on App Storage
                   Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId);
                   Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email);
-                  Fliplet.App.Storage.set('fl-data-source-validation', entry);
+                  Fliplet.App.Storage.set('fl-sms-verification', entry);
                 })
                 .catch(function(error) {
                   vmData.codeError = true;
@@ -158,14 +158,14 @@ Fliplet().then(function() {
       mounted: function() {
         // After half a second show auth
         setTimeout(function() {
-          var selector = '.fl-data-source-validation[data-data-source-validation-id="' + vmData.widgetId + '"]';
+          var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
           vmData.auth = true;
           calculateElHeight($(selector).find('.state[data-state=auth]'));
           vmData.loading = false;
         }, 500);
 
         // Check if user is already verified
-        Fliplet.App.Storage.get('fl-data-source-validation')
+        Fliplet.App.Storage.get('fl-sms-verification')
           .then(function(value) {
             if (!value) {
               return;
@@ -198,26 +198,26 @@ Fliplet().then(function() {
       watch: {
         auth: function(newVal) {
           if (newVal) {
-            var selector = '.fl-data-source-validation[data-data-source-validation-id="' + vmData.widgetId + '"]';
+            var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
             calculateElHeight($(selector).find('.state[data-state=auth]'));
           }
         },
         verifyCode: function(newVal) {
           if (newVal) {
-            var selector = '.fl-data-source-validation[data-data-source-validation-id="' + vmData.widgetId + '"]';
+            var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
             calculateElHeight($(selector).find('.state[data-state=verify-code]'));
           }
         },
         confirmation: function(newVal) {
           if (newVal) {
-            var selector = '.fl-data-source-validation[data-data-source-validation-id="' + vmData.widgetId + '"]';
+            var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
             calculateElHeight($(selector).find('.state[data-state=confirmation]'));
           }
         },
         emailError: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              var selector = '.fl-data-source-validation[data-data-source-validation-id="' + vmData.widgetId + '"]';
+              var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
               calculateElHeight($(selector).find('.state[data-state=auth]'));
             }, 0);
           }
@@ -225,7 +225,7 @@ Fliplet().then(function() {
         codeError: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              var selector = '.fl-data-source-validation[data-data-source-validation-id="' + vmData.widgetId + '"]';
+              var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
               calculateElHeight($(selector).find('.state[data-state=verify-code]'));
             }, 0);
           }
@@ -233,7 +233,7 @@ Fliplet().then(function() {
         resentCode: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              var selector = '.fl-data-source-validation[data-data-source-validation-id="' + vmData.widgetId + '"]';
+              var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
               calculateElHeight($(selector).find('.state[data-state=verify-code]'));
             }, 0);
           }

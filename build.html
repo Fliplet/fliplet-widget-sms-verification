@@ -1,5 +1,5 @@
 {{#if validation}}
-<div data-data-source-validation-id="{{id}}" data-data-source-validation-uuid="{{uuid}}" class="content-wrapper fl-data-source-validation" v-bind:class="{ 'device-offline': deviceOffline }">
+<div data-sms-verification-id="{{id}}" data-sms-verification-uuid="{{uuid}}" class="content-wrapper fl-sms-verification" v-bind:class="{ 'device-offline': deviceOffline }">
   <div class="verfication-offline">Your device is offline</div>
   <div class="state" v-bind:class="{ start: loading, past: verifyCode || confirmation, present: auth, 'has-code': storedEmail}" data-state="auth">
     <h2 class="aligncenter">Authentication</h2>
