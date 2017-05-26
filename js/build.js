@@ -138,7 +138,7 @@ Fliplet().then(function() {
             })
             .then(function(dataSource) {
               var where = {};
-              where[columns[type + 'Match']] = this.email;
+              where[columns[type + 'Match']] = vmData.email;
               dataSource.sendValidation({
                 type: type,
                 where: where
