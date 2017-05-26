@@ -14,12 +14,7 @@
 
   <div class="state" v-bind:class="{ past: confirmation, present: verifyCode, future: loading || auth, 'new-pin': resentCode }" data-state="verify-code">
     <h2>Verify your email address</h2>
-    <template v-if="type === 'email'">
-        <p>Enter the authentication code that was sent to <span class="input-email">\{{ storedEmail }}</span>.</p>
-      </template>
-    <template v-if="type === 'sms'">
-        <p>Enter the authentication code that was sent to the phone number associated with <span class="input-email">\{{ storedEmail }}</span>.</p>
-      </template>
+    <p>Enter the authentication code that was sent to the phone number associated with <span class="input-email">\{{ storedEmail }}</span>.</p>
     <div class="form-group input-wrapper" v-bind:class="{ 'has-error': codeError}">
       <input type="text" v-model="code" class="verify_pin form-control" placeholder="Enter authentication code">
       <span v-on:click="back" class="fa fa-chevron-left back"></span>
