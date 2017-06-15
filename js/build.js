@@ -155,8 +155,7 @@ Fliplet().then(function() {
           vmData.verifyCode = false;
         },
         changeState: function(state) {
-          var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
-          calculateElHeight($(selector).find('.state[data-state=' + state + ']'));
+          calculateElHeight($(this.$el).find('.state[data-state=' + state + ']'));
         }
       },
       mounted: function() {
