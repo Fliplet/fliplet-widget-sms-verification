@@ -153,6 +153,10 @@ Fliplet().then(function() {
           vmData.resentCode = false;
           vmData.auth = true;
           vmData.verifyCode = false;
+        },
+        changeState: function(state) {
+          var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
+          calculateElHeight($(selector).find('.state[data-state=' + state + ']'));
         }
       },
       mounted: function() {
@@ -198,37 +202,37 @@ Fliplet().then(function() {
       watch: {
         auth: function(newVal) {
           if (newVal) {
-            calculateElHeight($el.find('.state[data-state=auth]'));
+            this.changeState('auth');
           }
         },
         verifyCode: function(newVal) {
           if (newVal) {
-            calculateElHeight($el.find('.state[data-state=verify-code]'));
+            this.changeState('verify-code');
           }
         },
         confirmation: function(newVal) {
           if (newVal) {
-            calculateElHeight($el.find('.state[data-state=confirmation]'));
+            this.changeState('confirmation');
           }
         },
         emailError: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              calculateElHeight($el.find('.state[data-state=auth]'));
+              this.changeState('auth');
             }, 0);
           }
         },
         codeError: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              calculateElHeight($el.find('.state[data-state=verify-code]'));
+              this.changeState('verify-code');
             }, 0);
           }
         },
         resentCode: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              calculateElHeight($el.find('.state[data-state=verify-code]'));
+              this.changeState('verify-code');
             }, 0);
           }
         }
