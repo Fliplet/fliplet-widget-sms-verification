@@ -198,43 +198,37 @@ Fliplet().then(function() {
       watch: {
         auth: function(newVal) {
           if (newVal) {
-            var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
-            calculateElHeight($(selector).find('.state[data-state=auth]'));
+            calculateElHeight($el.find('.state[data-state=auth]'));
           }
         },
         verifyCode: function(newVal) {
           if (newVal) {
-            var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
-            calculateElHeight($(selector).find('.state[data-state=verify-code]'));
+            calculateElHeight($el.find('.state[data-state=verify-code]'));
           }
         },
         confirmation: function(newVal) {
           if (newVal) {
-            var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
-            calculateElHeight($(selector).find('.state[data-state=confirmation]'));
+            calculateElHeight($el.find('.state[data-state=confirmation]'));
           }
         },
         emailError: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
-              calculateElHeight($(selector).find('.state[data-state=auth]'));
+              calculateElHeight($el.find('.state[data-state=auth]'));
             }, 0);
           }
         },
         codeError: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
-              calculateElHeight($(selector).find('.state[data-state=verify-code]'));
+              calculateElHeight($el.find('.state[data-state=verify-code]'));
             }, 0);
           }
         },
         resentCode: function(newVal) {
           if (newVal) {
             setTimeout(function() {
-              var selector = '.fl-sms-verification[data-sms-verification-id="' + vmData.widgetId + '"]';
-              calculateElHeight($(selector).find('.state[data-state=verify-code]'));
+              calculateElHeight($el.find('.state[data-state=verify-code]'));
             }, 0);
           }
         }
