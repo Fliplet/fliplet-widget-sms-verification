@@ -5,7 +5,7 @@ Fliplet().then(function() {
     var data = Fliplet.Widget.getData(widgetId) || {};
 
     var dataSourceId = data.validation.dataSourceQuery.dataSourceId;
-    var type = data.validation.type;
+    var type = 'sms';
     var columns = data.validation.dataSourceQuery.columns;
 
     function validateEmail(email) {
@@ -45,7 +45,7 @@ Fliplet().then(function() {
       sendValidationLabel: 'Authenticate',
       widgetId: widgetId,
       disableButton: false,
-      type: data.validation.typem,
+      type: data.validation.type,
       deviceOffline: false
     };
 
