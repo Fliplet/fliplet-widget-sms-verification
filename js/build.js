@@ -45,7 +45,6 @@ Fliplet().then(function() {
       sendValidationLabel: 'Authenticate',
       widgetId: widgetId,
       disableButton: false,
-      type: data.validation.typem,
       deviceOffline: false
     };
 
