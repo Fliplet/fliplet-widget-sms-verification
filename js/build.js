@@ -120,7 +120,7 @@ Fliplet().then(function() {
                   Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId);
                   Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email);
                   Fliplet.App.Storage.set('fl-sms-verification', entry);
-                  Fliplet.Profile.set(entry);
+                  Fliplet.Profile.set('email', vmData.email);
                 })
                 .catch(function(error) {
                   vmData.codeError = true;
