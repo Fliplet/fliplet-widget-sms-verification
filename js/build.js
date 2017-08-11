@@ -111,17 +111,21 @@ Fliplet().then(function() {
                   where: where
                 })
                 .then(function(entry) {
+                  return Promise.all([
+                    Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId),
+                    Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email),
+                    Fliplet.App.Storage.set('fl-sms-verification', entry),
+                    Fliplet.Profile.set('email', vmData.email),
+                    Fliplet.Profile.set('phone', entry.data[columns[type + 'To']]),
+                    Fliplet.Hooks.run('onUserVerified', { entry: entry }),
+                    Fliplet.Session.get()
+                  ]);
+                })
+                .then(function () {
                   vmData.verifyCode = false;
                   vmData.confirmation = true;
                   vmData.codeError = false;
                   vmData.resentCode = false;
-
-                  // Save on App Storage
-                  Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId);
-                  Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email);
-                  Fliplet.App.Storage.set('fl-sms-verification', entry);
-                  Fliplet.Profile.set('email', vmData.email);
-                  Fliplet.Profile.set('phone', entry.data[columns[type + 'To']]);
                 })
                 .catch(function(error) {
                   vmData.codeError = true;
