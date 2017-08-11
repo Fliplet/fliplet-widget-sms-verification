@@ -122,6 +122,12 @@ Fliplet().then(function() {
                   Fliplet.App.Storage.set('fl-sms-verification', entry);
                   Fliplet.Profile.set('email', vmData.email);
                   Fliplet.Profile.set('phone', entry.data[columns[type + 'To']]);
+
+                  // Trigger hook
+                  Fliplet.Hooks.run('onUserVerified', { entry: entry });
+
+                  // Setting session
+                  Fliplet.Session.get();
                 })
                 .catch(function(error) {
                   vmData.codeError = true;
