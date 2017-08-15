@@ -106,31 +106,35 @@ Fliplet().then(function() {
                 code: vmData.code
               };
               where[columns[type + 'Match']] = vmData.email;
-              dataSource.validate({
-                  type: type,
-                  where: where
-                })
-                .then(function(entry) {
-                  return Promise.all([
-                    Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId),
-                    Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email),
-                    Fliplet.App.Storage.set('fl-sms-verification', entry),
-                    Fliplet.Profile.set('email', vmData.email),
-                    Fliplet.Profile.set('phone', entry.data[columns[type + 'To']]),
-                    Fliplet.Hooks.run('onUserVerified', { entry: entry }),
-                    Fliplet.Session.get()
-                  ]);
-                })
-                .then(function () {
-                  vmData.verifyCode = false;
-                  vmData.confirmation = true;
-                  vmData.codeError = false;
-                  vmData.resentCode = false;
-                })
-                .catch(function(error) {
-                  vmData.codeError = true;
-                  vmData.resentCode = false;
-                });
+
+              // Start session and verify code
+              Fliplet.Session.get()
+                .then(function() {
+                  dataSource.validate({
+                    type: type,
+                    where: where
+                  })
+                  .then(function(entry) {
+                    return Promise.all([
+                      Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId),
+                      Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email),
+                      Fliplet.App.Storage.set('fl-sms-verification', entry),
+                      Fliplet.Profile.set('email', vmData.email),
+                      Fliplet.Profile.set('phone', entry.data[columns[type + 'To']]),
+                      Fliplet.Hooks.run('onUserVerified', { entry: entry })
+                    ]);
+                  })
+                  .then(function () {
+                    vmData.verifyCode = false;
+                    vmData.confirmation = true;
+                    vmData.codeError = false;
+                    vmData.resentCode = false;
+                  })
+                  .catch(function(error) {
+                    vmData.codeError = true;
+                    vmData.resentCode = false;
+                  });
+              })
             });
         },
         showVerify: function() {
