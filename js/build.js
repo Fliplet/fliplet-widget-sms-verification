@@ -18,7 +18,7 @@ Fliplet().then(function() {
       var elementHeight = el.outerHeight(true);
 
       if (el.hasClass('start')) {
-        $('[data-sms-verification-uuid="' + parentUUID + '"]').children('.state.start')
+        $('[data-sms-verification-uuid="' + parentUUID + '"]').children('.state.start');
         if (vmData.storedEmail) {
           $('[data-sms-verification-uuid="' + parentUUID + '"]').children('.state.start').addClass('has-code');
         }
@@ -46,7 +46,8 @@ Fliplet().then(function() {
       widgetId: widgetId,
       disableButton: false,
       type: data.validation.type,
-      deviceOffline: false
+      deviceOffline: false,
+      securityError: undefined
     };
 
     var app = new Vue({
@@ -111,30 +112,32 @@ Fliplet().then(function() {
               Fliplet.Session.get()
                 .then(function() {
                   dataSource.validate({
-                    type: type,
-                    where: where
-                  })
-                  .then(function(entry) {
-                    return Promise.all([
-                      Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId),
-                      Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email),
-                      Fliplet.App.Storage.set('fl-sms-verification', entry),
-                      Fliplet.Profile.set('email', vmData.email),
-                      Fliplet.Profile.set('phone', entry.data[columns[type + 'To']]),
-                      Fliplet.Hooks.run('onUserVerified', { entry: entry })
-                    ]);
-                  })
-                  .then(function () {
-                    vmData.verifyCode = false;
-                    vmData.confirmation = true;
-                    vmData.codeError = false;
-                    vmData.resentCode = false;
-                  })
-                  .catch(function(error) {
-                    vmData.codeError = true;
-                    vmData.resentCode = false;
-                  });
-              })
+                      type: type,
+                      where: where
+                    })
+                    .then(function(entry) {
+                      return Promise.all([
+                        Fliplet.App.Storage.set('fl-chat-source-id', entry.dataSourceId),
+                        Fliplet.App.Storage.set('fl-chat-auth-email', vmData.email),
+                        Fliplet.App.Storage.set('fl-sms-verification', entry),
+                        Fliplet.Profile.set('email', vmData.email),
+                        Fliplet.Profile.set('phone', entry.data[columns[type + 'To']]),
+                        Fliplet.Hooks.run('onUserVerified', {
+                          entry: entry
+                        })
+                      ]);
+                    })
+                    .then(function() {
+                      vmData.verifyCode = false;
+                      vmData.confirmation = true;
+                      vmData.codeError = false;
+                      vmData.resentCode = false;
+                    })
+                    .catch(function(error) {
+                      vmData.codeError = true;
+                      vmData.resentCode = false;
+                    });
+                });
             });
         },
         showVerify: function() {
@@ -152,7 +155,7 @@ Fliplet().then(function() {
               dataSource.sendValidation({
                 type: type,
                 where: where
-              })
+              });
               vmData.codeError = false;
               vmData.resentCode = true;
             });
@@ -198,6 +201,11 @@ Fliplet().then(function() {
             vmData.email = email;
             vmData.storedEmail = email;
           });
+
+        // Check if there are errors from SAML2 features
+        if (Fliplet.Navigate.query.error) {
+          vmData.securityError = Fliplet.Navigate.query.error;
+        }
 
         // Online/ Offline handlers
         Fliplet.Navigator.onOnline(function() {
