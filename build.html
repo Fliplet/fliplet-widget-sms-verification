@@ -15,7 +15,7 @@
         <p class="email-error text-danger">\{{ securityError }}</p>
       </template>
       <button class="btn btn-primary verify-identity" v-bind:class="{ disabled: disableButton }" type="submit">\{{ sendValidationLabel }}</button>
-      <button v-if="storedEmail" v-on:click="showVerify" class="btn btn-link have-code">I have an verification code</button>
+      <button v-if="storedEmail" v-on:click="showVerify" class="btn btn-link have-code">I have a verification code</button>
     </form>
   </div>
 
@@ -36,7 +36,7 @@
   </div>
 
   <div class="state" v-bind:class="{ past: verifyCode, present: confirmation, future: loading || auth || verifyCode }" data-state="confirmation">
-    <p>You have been verified and you can now continue.</p>
+    <p>You have been verified and you can now proceed.</p>
     <button class="btn btn-primary lock_continue" v-on:click="redirect">Continue</button>
   </div>
 </div>
@@ -44,7 +44,7 @@
 <div class="content-wrapper placeholder">
   <div class="state present" data-state="auth">
     <h2 class="aligncenter">Verification</h2>
-    <p>Verify your email address below to gain access to the app.</p>
+    <p>Verify your email address below to proceed.</p>
     <div class="form-group">
       <input type="email" name="verify-email" class="form-control verify_email" placeholder="Enter your email">
     </div>
