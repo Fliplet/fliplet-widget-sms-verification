@@ -172,7 +172,11 @@ Fliplet().then(function() {
           vmData.verifyCode = false;
         },
         changeState: function(state) {
-          calculateElHeight($(this.$el).find('.state[data-state=' + state + ']'));
+          var $vm = this;
+          setTimeout(function nextTick() {
+            // Wait for keyboard to be dismissed before calculating element height
+            calculateElHeight($($vm.$el).find('.state[data-state=' + state + ']'));
+          }, 0);
         }
       },
       mounted: function() {
@@ -185,15 +189,16 @@ Fliplet().then(function() {
         }, 500);
 
         // Check if user is already verified
-        Fliplet.App.Storage.get('fl-sms-verification')
-          .then(function(value) {
-            if (!value) {
-              return;
-            }
-            setTimeout(function() {
-              Fliplet.Navigate.to(data.action);
-            }, 1000);
-          });
+        if (!Fliplet.Env.get('disableSecurity')) {
+          Fliplet.User.getCachedSession()
+            .then(function(session) {
+              if (session && session.server && session.server.passports && session.server.passports.dataSource) {
+                setTimeout(function() {
+                  Fliplet.Navigate.to(data.action);
+                }, 1000);
+              }
+            })
+        }
 
         // Check if user was already around...
         Fliplet.App.Storage.get('user-email')
