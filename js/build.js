@@ -73,6 +73,11 @@ Fliplet().then(function() {
             return;
           }
 
+          Fliplet.Analytics.trackEvent({
+            category: 'sms_verification',
+            action: 'code_request'
+          });
+
           Fliplet.DataSources.connect(dataSourceId, {
               offline: false
             })
@@ -99,6 +104,10 @@ Fliplet().then(function() {
             });
         },
         validate: function() {
+          Fliplet.Analytics.trackEvent({
+            category: 'sms_verification',
+            action: 'code_verify'
+          });
           Fliplet.DataSources.connect(dataSourceId, {
               offline: false
             })
@@ -132,12 +141,20 @@ Fliplet().then(function() {
                       ]);
                     })
                     .then(function() {
+                      Fliplet.Analytics.trackEvent({
+                        category: 'sms_verification',
+                        action: 'authenticate_pass'
+                      });
                       vmData.verifyCode = false;
                       vmData.confirmation = true;
                       vmData.codeError = false;
                       vmData.resentCode = false;
                     })
                     .catch(function(error) {
+                      Fliplet.Analytics.trackEvent({
+                        category: 'sms_verification',
+                        action: 'authenticate_fail'
+                      });
                       vmData.codeError = true;
                       vmData.resentCode = false;
                     });
@@ -149,7 +166,20 @@ Fliplet().then(function() {
           vmData.verifyCode = true;
           vmData.emailError = false;
         },
+        haveCode: function() {
+          Fliplet.Analytics.trackEvent({
+            category: 'sms_verification',
+            action: 'request_skip'
+          });
+
+          this.showVerify();
+        },
         resendCode: function() {
+          Fliplet.Analytics.trackEvent({
+            category: 'sms_verification',
+            action: 'code_resend'
+          });
+
           Fliplet.DataSources.connect(dataSourceId, {
               offline: false
             })
