@@ -42,7 +42,7 @@ Fliplet().then(function() {
       codeError: false,
       storedEmail: '',
       resentCode: false,
-      sendValidationLabel: 'Authenticate',
+      sendValidationLabel: 'Continue',
       widgetId: widgetId,
       disableButton: false,
       type: data.validation.type,
@@ -63,12 +63,24 @@ Fliplet().then(function() {
             }, 1000);
           }
         },
+        createUserProfile(entry) {
+          entry = entry || {};
+          if (!entry.dataSourceId || !entry.id) {
+            return;
+          }
+
+          return {
+            type: 'dataSource',
+            dataSourceId: entry.dataSourceId,
+            dataSourceEntryId: entry.id
+          };
+        },
         sendValidation: function() {
-          this.sendValidationLabel = 'Authenticating...';
+          this.sendValidationLabel = 'Verifying...';
           this.disableButton = true;
           if (!validateEmail(this.email)) {
             this.emailError = true;
-            this.sendValidationLabel = 'Authenticate';
+            this.sendValidationLabel = 'Continue';
             this.disableButton = false;
             return;
           }
@@ -93,12 +105,12 @@ Fliplet().then(function() {
                   Fliplet.App.Storage.set('user-email', vmData.email);
                   vmData.storedEmail = vmData.email;
                   app.showVerify();
-                  vmData.sendValidationLabel = 'Authenticate';
+                  vmData.sendValidationLabel = 'Continue';
                   vmData.disableButton = false;
                 })
                 .catch(function() {
                   vmData.emailError = true;
-                  vmData.sendValidationLabel = 'Authenticate';
+                  vmData.sendValidationLabel = 'Continue';
                   vmData.disableButton = false;
                 });
             });
@@ -125,6 +137,7 @@ Fliplet().then(function() {
                       where: where
                     })
                     .then(function(entry) {
+                      var user = app.createUserProfile(entry);
                       return Promise.all([
                         Fliplet.App.Storage.set({
                           'fl-chat-source-id': entry.dataSourceId,
@@ -133,7 +146,8 @@ Fliplet().then(function() {
                         }),
                         Fliplet.Profile.set({
                           'email': vmData.email,
-                          'phone': entry.data[columns[type + 'To']]
+                          'phone': entry.data[columns[type + 'To']],
+                          'user': user
                         }),
                         Fliplet.Hooks.run('onUserVerified', {
                           entry: entry
@@ -222,12 +236,46 @@ Fliplet().then(function() {
         if (!Fliplet.Env.get('disableSecurity')) {
           Fliplet.User.getCachedSession()
             .then(function(session) {
-              if (session && session.server && session.server.passports && session.server.passports.dataSource) {
-                setTimeout(function() {
-                  Fliplet.Navigate.to(data.action);
-                }, 1000);
+              if (!session || !session.accounts) {
+                return Promise.reject('Login session not found');
               }
+
+              var dataSource = session.accounts.dataSource || [];
+              var verifiedAccounts = dataSource.filter(function (dataSourceAccount) {
+                return dataSourceAccount.dataSourceId === dataSourceId;
+              });
+
+              if (!verifiedAccounts.length) {
+                return Promise.reject('Login session not found');
+              }
+
+              // Update stored email address based on retrieved session
+              var entry = verifiedAccounts[0];
+              var email = entry.data[columns[type + 'Match']];
+              var user = app.createUserProfile(entry);
+              return Promise.all([
+                Fliplet.App.Storage.set({
+                  'fl-chat-source-id': entry.dataSourceId,
+                  'fl-chat-auth-email': email,
+                  'fl-email-verification': entry
+                }),
+                Fliplet.Profile.set({
+                  'email': email,
+                  'phone': entry.data[columns[type + 'To']],
+                  'user': user
+                })
+              ]);
             })
+            .then(function () {
+              var navigate = Fliplet.Navigate.to(data.action);
+              if (typeof navigate === 'object' && typeof navigate.then === 'function') {
+                return navigate;
+              }
+              return Promise.resolve();
+            })
+            .catch(function (error) {
+              console.warn(error);
+            });
         }
 
         // Check if user was already around...
