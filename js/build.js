@@ -157,11 +157,12 @@ Fliplet().then(function() {
                           'email': vmData.email,
                           'phone': entry.data[columns[type + 'To']],
                           'user': user
-                        }),
-                        Fliplet.Hooks.run('onUserVerified', {
-                          entry: entry
                         })
-                      ]);
+                      ]).then(function () {
+                        return Fliplet.Hooks.run('onUserVerified', {
+                          entry: entry
+                        });
+                      });
                     })
                     .then(function() {
                       Fliplet.Analytics.trackEvent({
