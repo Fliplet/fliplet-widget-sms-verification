@@ -117,8 +117,8 @@ Fliplet().then(function() {
                   vmData.sendValidationLabel = 'Continue';
                   vmData.disableButton = false;
                 })
-                .catch(function() {
-                  vmData.emailError = true;
+                .catch(function(error) {
+                  vmData.emailError = error.responseJSON.message;
                   vmData.sendValidationLabel = 'Continue';
                   vmData.disableButton = false;
                 });
