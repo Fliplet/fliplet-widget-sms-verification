@@ -70,7 +70,3 @@ h2 small {
   -o-transform: translate(0, 0);
   transform: translate(0, 0);
 }
-
-.tab-pane {
-  padding-top: 15px;
-}
