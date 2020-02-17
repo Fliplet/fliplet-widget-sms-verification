@@ -100,16 +100,16 @@ Fliplet().then(function() {
           });
 
           Fliplet.DataSources.connect(dataSourceId, {
-              offline: false
-            })
+            offline: false
+          })
             .then(function(dataSource) {
               var where = {};
 
               where[columns[type + 'Match']] = vmData.email;
               dataSource.sendValidation({
-                  type: type,
-                  where: where
-                })
+                type: type,
+                where: where
+              })
                 .then(function() {
                   Fliplet.App.Storage.set('user-email', vmData.email);
                   vmData.storedEmail = vmData.email;
@@ -130,8 +130,8 @@ Fliplet().then(function() {
             action: 'code_verify'
           });
           Fliplet.DataSources.connect(dataSourceId, {
-              offline: false
-            })
+            offline: false
+          })
             .then(function(dataSource) {
               var where = {
                 code: vmData.code
@@ -142,9 +142,9 @@ Fliplet().then(function() {
               Fliplet.Session.get()
                 .then(function() {
                   dataSource.validate({
-                      type: type,
-                      where: where
-                    })
+                    type: type,
+                    where: where
+                  })
                     .then(function(entry) {
                       var user = app.createUserProfile(entry);
                       return Promise.all([
@@ -158,7 +158,7 @@ Fliplet().then(function() {
                           'phone': entry.data[columns[type + 'To']],
                           'user': user
                         })
-                      ]).then(function () {
+                      ]).then(function() {
                         return Fliplet.Hooks.run('onUserVerified', {
                           entry: entry
                         });
@@ -174,7 +174,7 @@ Fliplet().then(function() {
                       vmData.codeError = false;
                       vmData.resentCode = false;
                     })
-                    .catch(function(error) {
+                    .catch(function() {
                       Fliplet.Analytics.trackEvent({
                         category: 'sms_verification',
                         action: 'authenticate_fail'
@@ -206,8 +206,8 @@ Fliplet().then(function() {
           });
 
           Fliplet.DataSources.connect(dataSourceId, {
-              offline: false
-            })
+            offline: false
+          })
             .then(function(dataSource) {
               var where = {};
               where[columns[type + 'Match']] = vmData.email;
@@ -252,7 +252,7 @@ Fliplet().then(function() {
               }
 
               var dataSource = session.accounts.dataSource || [];
-              var verifiedAccounts = dataSource.filter(function (dataSourceAccount) {
+              var verifiedAccounts = dataSource.filter(function(dataSourceAccount) {
                 return dataSourceAccount.dataSourceId === dataSourceId;
               });
 
@@ -277,14 +277,14 @@ Fliplet().then(function() {
                 })
               ]);
             })
-            .then(function () {
+            .then(function() {
               var navigate = Fliplet.Navigate.to(data.action);
               if (typeof navigate === 'object' && typeof navigate.then === 'function') {
                 return navigate;
               }
               return Promise.resolve();
             })
-            .catch(function (error) {
+            .catch(function(error) {
               console.warn(error);
             });
         }
