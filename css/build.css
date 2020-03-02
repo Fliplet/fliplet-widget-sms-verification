@@ -174,5 +174,5 @@
 
 /* Fix component view when it is placed in the container */
 [data-widget-package="com.fliplet.sms-verfication"] {
-	width: 100%;
+  width: 100%;
 }
