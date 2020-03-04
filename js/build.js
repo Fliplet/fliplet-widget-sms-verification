@@ -1,8 +1,6 @@
 Fliplet().then(function() {
-  $('.fl-sms-verification').each(function() {
-    var $el = $(this);
-    var widgetId = $el.data('sms-verification-id');
-    var data = Fliplet.Widget.getData(widgetId) || {};
+  Fliplet.Widget.instance('sms-verification', function(data) {
+    var widgetId = data.id;
 
     var type = 'sms';
     var dataSourceId = _.hasIn(data, 'validation.dataSourceQuery.dataSourceId')

@@ -171,3 +171,8 @@
 	opacity: 0.4;
 }
 /* END OFFLINE STATUS */
+
+/* Fix component view when it is placed in the container */
+[data-widget-package="com.fliplet.sms-verfication"] {
+  width: 100%;
+}
