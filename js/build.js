@@ -86,7 +86,7 @@ Fliplet().then(function() {
           this.sendValidationLabel = 'Verifying...';
           this.disableButton = true;
           if (!validateEmail(this.email)) {
-            this.emailError = true;
+            this.emailError = 'The email address is not valid.';
             this.sendValidationLabel = 'Continue';
             this.disableButton = false;
             return;
