@@ -23,6 +23,10 @@ h2 small {
   color: #14505e;
 }
 
+.alert-warning u {
+  cursor: pointer;
+}
+
 /* FORMS */
 
 .form-group {
