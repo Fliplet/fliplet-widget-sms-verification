@@ -30,11 +30,11 @@ h2 small {
   opacity: 0.5;
 }
 
-header {
+.header-block {
   padding-bottom: 0.5em;
 }
 
-.header-wrapper p {
+.header-block p {
   flex: none;
   margin: 0;
 }
