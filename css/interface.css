@@ -30,15 +30,6 @@ h2 small {
   opacity: 0.5;
 }
 
-.header-block {
-  padding-bottom: 0.5em;
-}
-
-.header-block p {
-  flex: none;
-  margin: 0;
-}
-
 .alert-warning u {
   cursor: pointer;
 }
