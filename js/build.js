@@ -47,6 +47,7 @@ Fliplet().then(function() {
       emailError: false,
       code: null,
       codeError: false,
+      codeErrorMessage: '',
       storedEmail: '',
       resentCode: false,
       sendValidationLabel: 'Continue',
