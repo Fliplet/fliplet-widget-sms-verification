@@ -178,6 +178,7 @@ Fliplet().then(function() {
                         action: 'authenticate_fail'
                       });
                       vmData.codeError = true;
+                      vmData.codeErrorMessage = Fliplet.parseError(error);
                       vmData.resentCode = false;
                     });
                 });
