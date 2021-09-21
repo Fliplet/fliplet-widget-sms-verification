@@ -1,0 +1,46 @@
+{
+    "widgets": {
+        "smsVerification": {
+            "dataSource": {
+                "formContent": {
+                    "heading": "Configure the SMS verification component",
+                    "securitAlertHeading": "Security rule warning",
+                    "instruction": "Please check your app's <u>security rules</u> as we have detected your",
+                    "mentionedScreen": "SMS verification screen is not mentioned.",
+                    "securityRulesLink": "Learn more about security rules.",
+                    "redirectScreen": "Redirect the user to a screen after verification"
+                },
+                "offline": "Your device is offline",
+                "sendValidation": {
+                    "heading": "Verification",
+                    "description": "Verify your email address below to gain access.",
+                    "haveCode": "I have a verification code"
+                },
+                "validateForm": {
+                    "heading": "Verify your email address",
+                    "smsCode": "Enter the verification code that was sent to the phone number associated with",
+                    "submitButton": "Verify",
+                    "resendCode": "Resend verification code",
+                    "pinResent": "A new verification code was sent to your phone number."
+                },
+                "stateVerification": {
+                    "description": "You have been verified and you can now proceed.",
+                    "continueButton": "Continue"
+                },
+                "verificationEmail": {
+                    "heading": "Verification",
+                    "description": "Verify your email address below to proceed.",
+                    "continueButton": "Continue"
+                },
+                "input": {
+                    "emailInputPlaceholder": "Enter your email",
+                    "codeInputPlaceholder": "Enter verification code"
+                },
+                "emailErrorMessage": "The email address is not valid.",
+                "sendValidationLabel": "Continue",
+                "verifyingLabel": "Verifying...",
+                "loginNotFound": "Login session not found"
+            }
+        }
+    }
+}
