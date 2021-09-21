@@ -1,12 +1,12 @@
 {{#if validation}}
 <div data-sms-verification-id="{{id}}" data-sms-verification-uuid="{{uuid}}" class="content-wrapper fl-sms-verification" v-bind:class="{ 'device-offline': deviceOffline }">
-  <div class="verfication-offline">Your device is offline</div>
+  <div class="verfication-offline" data-translate="widgets.smsVerification.dataSource.offline">Your device is offline</div>
   <div class="state" v-bind:class="{ start: loading, past: verifyCode || confirmation, present: auth, 'has-code': storedEmail}" data-state="auth">
     <form v-on:submit.prevent="sendValidation">
-      <h2 class="aligncenter">Verification</h2>
-      <p>Verify your email address below to gain access.</p>
+      <h2 class="aligncenter" data-translate="widgets.smsVerification.dataSource.email.title">Verification</h2>
+      <p data-translate="widgets.smsVerification.dataSource.email.instruction">Verify your email address below to gain access.</p>
       <div class="form-group" v-bind:class="{ 'has-error': emailError}">
-        <input type="email" v-model="email" name="verify-email" class="form-control verify_email" placeholder="Enter your email">
+        <input type="email" v-model="email" name="verify-email" class="form-control verify_email" placeholder="{{T "widgets.smsVerification.dataSource.email.placeholder"}}">
       </div>
       <template v-if="emailError">
         <p class="email-error text-danger">\{{ emailError }}</p>
@@ -15,28 +15,28 @@
         <p class="email-error text-danger">\{{ securityError }}</p>
       </template>
       <button class="btn btn-primary verify-identity" v-bind:class="{ disabled: disableButton }" type="submit">\{{ sendValidationLabel }}</button>
-      <span v-if="storedEmail" v-on:click="haveCode" class="btn btn-link have-code">I have a verification code</span>
+      <span v-if="storedEmail" v-on:click="haveCode" class="btn btn-link have-code" data-translate="widgets.smsVerification.dataSource.email.actions.userHasCode">I have a verification code</span>
     </form>
   </div>
 
   <div class="state" v-bind:class="{ past: confirmation, present: verifyCode, future: loading || auth, 'new-pin': resentCode }" data-state="verify-code">
     <form v-on:submit.prevent="validate">
-      <h2>Verify your email address</h2>
-      <p>Enter the verification code that was sent to the phone number associated with <span class="input-email">\{{ storedEmail }}</span>.</p>
+      <h2 data-translate="widgets.smsVerification.dataSource.code.title">Verify your email address</h2>
+      <p data-translate="widgets.smsVerification.dataSource.code.instruction">Enter the verification code that was sent to the phone number associated with <span class="input-email">\{{ storedEmail }}</span>.</p>
       <div class="form-group input-wrapper" v-bind:class="{ 'has-error': codeError}">
-        <input type="tel" v-model="code" class="verify_pin form-control" ref="verificationCode" placeholder="Enter verification code">
+        <input type="tel" v-model="code" class="verify_pin form-control" ref="verificationCode" placeholder="{{T "widgets.smsVerification.dataSource.code.placeholder"}}">
         <span v-on:click="back" class="fa fa-chevron-left back"></span>
       </div>
       <p class="pin-error text-danger">\{{ codeErrorMessage }}</p>
-      <button class="btn btn-primary verify-code" type="submit">Verify</button>
-      <span v-on:click="resendCode" class="btn btn-link resend-code">Resend verification code</span>
-      <p class="pin-resent text-success">A new verification code was sent to your phone number.</p>
+      <button class="btn btn-primary verify-code" type="submit" data-translate="widgets.smsVerification.dataSource.code.actions.verify">Verify</button>
+      <span v-on:click="resendCode" class="btn btn-link resend-code" data-translate="widgets.smsVerification.dataSource.code.actions.resend">Resend verification code</span>
+      <p class="pin-resent text-success" data-translate="widgets.smsVerification.dataSource.code.newCodeSent">A new verification code was sent to your phone number.</p>
     </form>
   </div>
 
   <div class="state" v-bind:class="{ past: verifyCode, present: confirmation, future: loading || auth || verifyCode }" data-state="confirmation">
-    <p>You have been verified and you can now proceed.</p>
-    <button class="btn btn-primary lock_continue" v-on:click="redirect">Continue</button>
+    <p data-translate="widgets.smsVerification.dataSource.success">You have been verified and you can now proceed.</p>
+    <button class="btn btn-primary lock_continue" v-on:click="redirect" data-translate="widgets.smsVerification.dataSource.email.send">Continue</button>
   </div>
 </div>
 {{else}}
