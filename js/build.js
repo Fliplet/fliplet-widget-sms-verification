@@ -1,7 +1,7 @@
 Fliplet().then(function() {
-  $(this).translate();
-
   Fliplet.Widget.instance('sms-verification', function(data) {
+    $(this).translate();
+
     var widgetId = data.id;
 
     var type = 'sms';
@@ -250,7 +250,7 @@ Fliplet().then(function() {
           Fliplet.User.getCachedSession()
             .then(function(session) {
               if (!session || !session.accounts) {
-                return Promise.reject(T('widgets.emailVerification.dataSource.errors.sessionNotFound'));
+                return Promise.reject(T('widgets.smsVerification.dataSource.errors.sessionNotFound'));
               }
 
               var dataSource = session.accounts.dataSource || [];
@@ -259,7 +259,7 @@ Fliplet().then(function() {
               });
 
               if (!verifiedAccounts.length) {
-                return Promise.reject(T('widgets.emailVerification.dataSource.errors.sessionNotFound'));
+                return Promise.reject(T('widgets.smsVerification.dataSource.errors.sessionNotFound'));
               }
 
               // Update stored email address based on retrieved session
