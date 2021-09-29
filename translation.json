@@ -1,7 +1,7 @@
 {
     "widgets": {
-        "smsVerification": {
-            "dataSource": {
+        "login": {
+            "smsVerification": {
                 "offline": "Your device is offline",
                 "email": {
                     "title": "Verification",
@@ -15,7 +15,7 @@
                 },
                 "code": {
                     "title": "Verify your email address",
-                    "instruction": "Enter the verification code that was sent to the phone number associated with",
+                    "instruction": "Enter the verification code that was sent to the phone number associated with <span class=\"input-email\">{{ email }}</span>.",
                     "placeholder": "Enter verification code",
                     "newCodeSent": "A new verification code was sent to your phone number.",
                     "actions": {

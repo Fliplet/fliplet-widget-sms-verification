@@ -86,11 +86,11 @@ Fliplet().then(function() {
           };
         },
         sendValidation: function() {
-          this.sendValidationLabel = T('widgets.smsVerification.dataSource.email.progress');
+          this.sendValidationLabel = T('widgets.login.smsVerification.email.progress');
           this.disableButton = true;
           if (!validateEmail(this.email)) {
-            this.emailError = T('widgets.smsVerification.dataSource.errors.emailInvalid');
-            this.sendValidationLabel = T('widgets.smsVerification.dataSource.email.send');
+            this.emailError = T('widgets.login.smsVerification.errors.emailInvalid');
+            this.sendValidationLabel = T('widgets.login.smsVerification.email.send');
             this.disableButton = false;
             return;
           }
@@ -115,12 +115,12 @@ Fliplet().then(function() {
                   Fliplet.App.Storage.set('user-email', vmData.email);
                   vmData.storedEmail = vmData.email;
                   app.showVerify();
-                  vmData.sendValidationLabel = T('widgets.smsVerification.dataSource.email.send');
+                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.send');
                   vmData.disableButton = false;
                 })
                 .catch(function(error) {
                   vmData.emailError = Fliplet.parseError(error);
-                  vmData.sendValidationLabel = T('widgets.smsVerification.dataSource.email.send');
+                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.send');
                   vmData.disableButton = false;
                 });
             });
@@ -250,7 +250,7 @@ Fliplet().then(function() {
           Fliplet.User.getCachedSession()
             .then(function(session) {
               if (!session || !session.accounts) {
-                return Promise.reject(T('widgets.smsVerification.dataSource.errors.sessionNotFound'));
+                return Promise.reject(T('widgets.login.smsVerification.errors.sessionNotFound'));
               }
 
               var dataSource = session.accounts.dataSource || [];
@@ -259,7 +259,7 @@ Fliplet().then(function() {
               });
 
               if (!verifiedAccounts.length) {
-                return Promise.reject(T('widgets.smsVerification.dataSource.errors.sessionNotFound'));
+                return Promise.reject(T('widgets.login.smsVerification.errors.sessionNotFound'));
               }
 
               // Update stored email address based on retrieved session
