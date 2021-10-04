@@ -61,6 +61,7 @@ Fliplet().then(function() {
     };
 
     var app = new Vue({
+      i18n: Fliplet.Locale.plugins.vue(),
       el: this,
       data: vmData,
       methods: {
@@ -352,6 +353,9 @@ Fliplet().then(function() {
               app.changeState('verify-code');
             }, 0);
           }
+        },
+        storedEmail: function(newVal) {
+          app.$refs.storedEmail.innerHTML = newVal;
         }
       }
     });

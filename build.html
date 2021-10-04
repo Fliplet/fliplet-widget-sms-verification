@@ -22,7 +22,7 @@
   <div class="state" v-bind:class="{ past: confirmation, present: verifyCode, future: loading || auth, 'new-pin': resentCode }" data-state="verify-code">
     <form v-on:submit.prevent="validate">
       <h2 data-translate="widgets.login.smsVerification.code.title">Verify your email address</h2>
-      <p>\{{T "widgets.login.smsVerification.code.instruction" email=storedEmail}}</p>
+      <p data-translate="[html]widgets.login.smsVerification.code.instruction">Enter the verification code that was sent to the phone number associated with 1 <span class="input-email" ref="storedEmail"></span>.</p>
       <div class="form-group input-wrapper" v-bind:class="{ 'has-error': codeError}">
         <input type="tel" v-model="code" class="verify_pin form-control" ref="verificationCode" data-translate="[placeholder]widgets.login.smsVerification.code.placeholder" placeholder="Enter verification code">
         <span v-on:click="back" class="fa fa-chevron-left back"></span>
