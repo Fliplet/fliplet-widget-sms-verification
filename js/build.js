@@ -52,7 +52,7 @@ Fliplet().then(function() {
       codeErrorMessage: '',
       storedEmail: '',
       resentCode: false,
-      sendValidationLabel: 'Continue',
+      sendValidationLabel: T('widgets.login.smsVerification.email.actions.send'),
       widgetId: widgetId,
       disableButton: false,
       type: data.validation.type,
