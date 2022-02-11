@@ -120,7 +120,7 @@ Fliplet().then(function() {
                   vmData.disableButton = false;
                 })
                 .catch(function(error) {
-                  vmData.emailError = Fliplet.parseError(error);
+                  vmData.emailError = T(Fliplet.parseError(error));
                   vmData.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
                   vmData.disableButton = false;
                 });
@@ -305,7 +305,7 @@ Fliplet().then(function() {
 
         // Check if there are errors from SAML2 features
         if (Fliplet.Navigate.query.error) {
-          vmData.securityError = Fliplet.Navigate.query.error;
+          vmData.securityError = T(Fliplet.Navigate.query.error);
         }
 
         // Online/ Offline handlers
