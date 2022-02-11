@@ -36,7 +36,7 @@
 
   <div class="state" v-bind:class="{ past: verifyCode, present: confirmation, future: loading || auth || verifyCode }" data-state="confirmation">
     <p data-translate="widgets.login.smsVerification.success">You have been verified and you can now proceed.</p>
-    <button class="btn btn-primary lock_continue" v-on:click="redirect" data-translate="widgets.login.smsVerification.email.send">Continue</button>
+    <button class="btn btn-primary lock_continue" v-on:click="redirect" data-translate="widgets.login.smsVerification.email.actions.send">Continue</button>
   </div>
 </div>
 {{else}}
