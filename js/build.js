@@ -91,7 +91,7 @@ Fliplet().then(function() {
           this.disableButton = true;
           if (!validateEmail(this.email)) {
             this.emailError = T('widgets.login.smsVerification.errors.emailInvalid');
-            this.sendValidationLabel = T('widgets.login.smsVerification.email.send');
+            this.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
             this.disableButton = false;
             return;
           }
@@ -116,12 +116,12 @@ Fliplet().then(function() {
                   Fliplet.App.Storage.set('user-email', vmData.email);
                   vmData.storedEmail = vmData.email;
                   app.showVerify();
-                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.send');
+                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
                   vmData.disableButton = false;
                 })
                 .catch(function(error) {
                   vmData.emailError = Fliplet.parseError(error);
-                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.send');
+                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
                   vmData.disableButton = false;
                 });
             });
