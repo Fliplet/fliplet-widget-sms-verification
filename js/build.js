@@ -120,9 +120,7 @@ Fliplet().then(function() {
                   vmData.disableButton = false;
                 })
                 .catch(function(error) {
-                  debugger;
                   vmData.emailError = Fliplet.parseError(error);
-                  T(vmData.emailError);
                   vmData.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
                   vmData.disableButton = false;
                 });
