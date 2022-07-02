@@ -1,5 +1,7 @@
 Fliplet().then(function() {
   Fliplet.Widget.instance('sms-verification', function(data) {
+    $(this).translate();
+
     var widgetId = data.id;
 
     var type = 'sms';
@@ -50,7 +52,7 @@ Fliplet().then(function() {
       codeErrorMessage: '',
       storedEmail: '',
       resentCode: false,
-      sendValidationLabel: 'Continue',
+      sendValidationLabel: T('widgets.login.smsVerification.email.actions.send'),
       widgetId: widgetId,
       disableButton: false,
       type: data.validation.type,
@@ -59,6 +61,7 @@ Fliplet().then(function() {
     };
 
     var app = new Vue({
+      i18n: Fliplet.Locale.plugins.vue(),
       el: this,
       data: vmData,
       methods: {
@@ -84,11 +87,11 @@ Fliplet().then(function() {
           };
         },
         sendValidation: function() {
-          this.sendValidationLabel = 'Verifying...';
+          this.sendValidationLabel = T('widgets.login.smsVerification.email.progress');
           this.disableButton = true;
           if (!validateEmail(this.email)) {
-            this.emailError = 'The email address is not valid.';
-            this.sendValidationLabel = 'Continue';
+            this.emailError = T('widgets.login.smsVerification.errors.emailInvalid');
+            this.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
             this.disableButton = false;
             return;
           }
@@ -113,12 +116,12 @@ Fliplet().then(function() {
                   Fliplet.App.Storage.set('user-email', vmData.email);
                   vmData.storedEmail = vmData.email;
                   app.showVerify();
-                  vmData.sendValidationLabel = 'Continue';
+                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
                   vmData.disableButton = false;
                 })
                 .catch(function(error) {
                   vmData.emailError = Fliplet.parseError(error);
-                  vmData.sendValidationLabel = 'Continue';
+                  vmData.sendValidationLabel = T('widgets.login.smsVerification.email.actions.send');
                   vmData.disableButton = false;
                 });
             });
@@ -248,7 +251,7 @@ Fliplet().then(function() {
           Fliplet.User.getCachedSession()
             .then(function(session) {
               if (!session || !session.accounts) {
-                return Promise.reject('Login session not found');
+                return Promise.reject(T('widgets.login.smsVerification.errors.sessionNotFound'));
               }
 
               var dataSource = session.accounts.dataSource || [];
@@ -257,7 +260,7 @@ Fliplet().then(function() {
               });
 
               if (!verifiedAccounts.length) {
-                return Promise.reject('Login session not found');
+                return Promise.reject(T('widgets.login.smsVerification.errors.sessionNotFound'));
               }
 
               // Update stored email address based on retrieved session
@@ -350,6 +353,9 @@ Fliplet().then(function() {
               app.changeState('verify-code');
             }, 0);
           }
+        },
+        storedEmail: function(newVal) {
+          app.$refs.storedEmail.innerHTML = newVal;
         }
       }
     });
