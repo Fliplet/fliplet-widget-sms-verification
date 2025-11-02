@@ -5,10 +5,10 @@ Fliplet().then(function() {
     var widgetId = data.id;
 
     var type = 'sms';
-    var dataSourceId = _.hasIn(data, 'validation.dataSourceQuery.dataSourceId')
+    var dataSourceId = Fliplet.Utils.hasIn(data, 'validation.dataSourceQuery.dataSourceId')
       ? data.validation.dataSourceQuery.dataSourceId
       : null;
-    var columns = _.hasIn(data, 'validation.dataSourceQuery.columns')
+    var columns = Fliplet.Utils.hasIn(data, 'validation.dataSourceQuery.columns')
       ? data.validation.dataSourceQuery.columns
       : null;
 
